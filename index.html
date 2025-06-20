@@ -340,15 +340,24 @@
             position: relative;
         }
 
-        .profile-image {
-            width: 300px;
-            height: 300px;
-            border-radius: 50%;
-            background-image: url('IMG_20241227_175100_656.webp')
-            animation: profilePulse 4s ease-in-out infinite;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
+        /* ...existing code... */
+.profile-image {
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    background-image: 
+        linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1),
+        url('IMG_20241227_175100_656');
+    background-origin: border-box;
+    background-clip: border-box;
+    background-size: cover;
+    background-position: center;
+    padding: 8px;
+    animation: profilePulse 4s ease-in-out infinite;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+/* ...existing code... */
 
         .profile-image:hover {
             transform: scale(1.1) rotate(5deg);
