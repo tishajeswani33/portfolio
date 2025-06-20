@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tisha Jeswani - Interactive Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0a0a0a;
+            color: white;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* Animated Background */
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            z-index: -1;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Particle System */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .particle:nth-child(odd) {
+            animation-duration: 8s;
+            background: rgba(116, 75, 162, 0.8);
+        }
+
+        .particle:nth-child(even) {
+            animation-duration: 10s;
+            background: rgba(102, 126, 234, 0.8);
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 50px;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            text-decoration: none;
+            color: white;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+            transition: all 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.1);
+            text-shadow: 0 0 30px rgba(255, 255, 255, 0.8);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 10px 20px;
+            border-radius: 25px;
+        }
+
+        .nav-links a:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            z-index: 2;
+            animation: heroEntrance 2s ease;
+        }
+
+        .hero-avatar {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            margin: 0 auto 30px;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1);
+            padding: 5px;
+            animation: avatarGlow 3s ease-in-out infinite;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .hero-avatar:hover {
+            transform: scale(1.1) rotate(10deg);
+        }
+
+        .avatar-inner {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            font-weight: bold;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96e6a1);
+            background-size: 400% 400%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientText 3s ease infinite;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .hero h1:hover {
+            transform: scale(1.05);
+            filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.5));
+        }
+
+        .hero .subtitle {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            opacity: 0.9;
+            animation: typewriter 4s steps(40) 1s both;
+        }
+
+        .hero .tagline {
+            font-size: 1.3rem;
+            margin-bottom: 40px;
+            opacity: 0.8;
+            font-style: italic;
+            animation: fadeInUp 1s ease 2s both;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 15px 40px;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Floating 3D Elements */
+        .floating-shapes {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .shape {
+            position: absolute;
+            opacity: 0.7;
+            animation: float3D 8s ease-in-out infinite;
+        }
+
+        .shape-1 {
+            top: 10%;
+            left: 10%;
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(45deg, #ff6b6b, #e73c7e);
+            border-radius: 20px;
+            animation-delay: 0s;
+        }
+
+        .shape-2 {
+            top: 20%;
+            right: 15%;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, #4ecdc4, #23d5ab);
+            border-radius: 50%;
+            animation-delay: 2s;
+        }
+
+        .shape-3 {
+            bottom: 30%;
+            left: 20%;
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+            animation-delay: 4s;
+        }
+
+        /* Sections */
+        .section {
+            padding: 100px 50px;
+            position: relative;
+            backdrop-filter: blur(10px);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 3.5rem;
+            margin-bottom: 60px;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .section-title:hover {
+            transform: scale(1.1);
+            filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.3));
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            border-radius: 2px;
+        }
+
+        /* About Section */
+        .about {
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .about-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .about-image-section {
+            position: relative;
+        }
+
+        .profile-image {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1);
+            padding: 8px;
+            animation: profilePulse 4s ease-in-out infinite;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .profile-image:hover {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .profile-inner {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 72px;
+            color: white;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
+        }
+
+        .about-text {
+            font-size: 1.3rem;
+            line-height: 1.9;
+            opacity: 0.9;
+        }
+
+        .about-text p {
+            margin-bottom: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .about-text p:hover {
+            transform: translateX(10px);
+            color: #4ecdc4;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+
+        .stat-item {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 25px;
+            border-radius: 20px;
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .stat-item:hover {
+            transform: translateY(-10px) scale(1.05);
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #4ecdc4;
+            animation: countUp 2s ease;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            opacity: 0.8;
+            margin-top: 10px;
+        }
+
+        /* Projects Section */
+        .projects {
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .project-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 25px;
+            padding: 35px;
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transform: rotate(45deg);
+            transition: all 0.5s ease;
+            opacity: 0;
+        }
+
+        .project-card:hover::before {
+            opacity: 1;
+            animation: shimmer 1.5s ease-in-out;
+        }
+
+        .project-card:hover {
+            transform: translateY(-15px) rotateX(5deg) rotateY(5deg);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .project-card h3 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #4ecdc4;
+            transition: all 0.3s ease;
+        }
+
+        .project-card:hover h3 {
+            color: #ff6b6b;
+            transform: scale(1.05);
+        }
+
+        .project-card p {
+            opacity: 0.9;
+            line-height: 1.7;
+            margin-bottom: 25px;
+            font-size: 1.1rem;
+        }
+
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin: 25px 0;
+        }
+
+        .tech-tag {
+            background: rgba(78, 205, 196, 0.3);
+            padding: 8px 18px;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            border: 1px solid rgba(78, 205, 196, 0.5);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .tech-tag:hover {
+            background: rgba(78, 205, 196, 0.6);
+            transform: translateY(-3px) scale(1.1);
+            box-shadow: 0 5px 15px rgba(78, 205, 196, 0.3);
+        }
+
+        .project-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .project-link {
+            padding: 12px 25px;
+            background: linear-gradient(45deg, #ff6b6b, #e73c7e);
+            border-radius: 25px;
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-link:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 10px 25px rgba(255, 107, 107, 0.4);
+        }
+
+        /* Interactive Testimonials */
+        .testimonials {
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .testimonial-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 25px;
+            padding: 40px;
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            transition: all 0.4s ease;
+            cursor: pointer;
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .testimonial-card::before {
+            content: '"';
+            position: absolute;
+            top: -20px;
+            left: 30px;
+            font-size: 120px;
+            color: rgba(255, 255, 255, 0.1);
+            font-family: serif;
+        }
+
+        .testimonial-text {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            margin-bottom: 25px;
+            font-style: italic;
+            opacity: 0.9;
+        }
+
+        .testimonial-author {
+            color: #4ecdc4;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .testimonial-role {
+            opacity: 0.7;
+            font-size: 0.95rem;
+            margin-top: 5px;
+        }
+
+        /* Interactive Resume Section */
+        .resume {
+            background: rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
+
+        .resume-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .resume-text {
+            font-size: 1.3rem;
+            line-height: 1.9;
+            margin-bottom: 40px;
+            opacity: 0.9;
+        }
+
+        .tech-showcase {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 40px 0;
+            flex-wrap: wrap;
+        }
+
+        .tech-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .tech-item:hover {
+            transform: translateY(-10px) scale(1.1);
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .download-btn {
+            display: inline-block;
+            padding: 25px 60px;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: all 0.4s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .download-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.6s;
+        }
+
+        .download-btn:hover::before {
+            left: 100%;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-8px) scale(1.05);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Animations */
+        @keyframes heroEntrance {
+            0% {
+                opacity: 0;
+                transform: translateY(100px) scale(0.8);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @keyframes avatarGlow {
+            0%, 100% {
+                box-shadow: 0 0 20px rgba(255, 107, 107, 0.5);
+            }
+            50% {
+                box-shadow: 0 0 40px rgba(78, 205, 196, 0.7);
+            }
+        }
+
+        @keyframes gradientText {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        @keyframes typewriter {
+            0% { width: 0; }
+            100% { width: 100%; }
+        }
+
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes float3D {
+            0%, 100% {
+                transform: translateY(0) rotateX(0) rotateY(0);
+            }
+            33% {
+                transform: translateY(-20px) rotateX(10deg) rotateY(5deg);
+            }
+            66% {
+                transform: translateY(10px) rotateX(-5deg) rotateY(-10deg);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) translateX(0);
+            }
+            25% {
+                transform: translateY(-20px) translateX(10px);
+            }
+            50% {
+                transform: translateY(-10px) translateX(-10px);
+            }
+            75% {
+                transform: translateY(-30px) translateX(5px);
+            }
+        }
+
+        @keyframes profilePulse {
+            0%, 100% {
+                box-shadow: 0 0 30px rgba(255, 107, 107, 0.5);
+            }
+            50% {
+                box-shadow: 0 0 60px rgba(78, 205, 196, 0.8);
+            }
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        @keyframes countUp {
+            0% { transform: scale(0); }
+            100% { transform: scale(1); }
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            .hero .subtitle { font-size: 1.3rem; }
+            .nav-links { display: none; }
+            .section { padding: 50px 20px; }
+            .about-content { grid-template-columns: 1fr; text-align: center; }
+            .projects-grid { grid-template-columns: 1fr; }
+            .testimonials-grid { grid-template-columns: 1fr; }
+            header { padding: 15px 20px; }
+            .cta-buttons { flex-direction: column; align-items: center; }
+            .tech-showcase { flex-direction: column; align-items: center; }
+        }
+    </style>
+</head>
+<body>
+    <div class="animated-bg"></div>
+    <div class="particles" id="particles"></div>
+
+    <header>
+        <nav>
+            <a href="#" class="logo">TJ</a>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#achievements">Achievements</a></li>
+                <li><a href="#testimonials">Testimonials</a></li>
+                <li><a href="#resume">Resume</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero" id="home">
+        <div class="floating-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+        </div>
+        <div class="hero-content">
+            <div class="hero-avatar" onclick="avatarClick()">
+                <div class="avatar-inner">TJ</div>
+            </div>
+            <h1 onclick="titleClick()">Tisha Jeswani</h1>
+            <p class="subtitle">Developer • Writer • AI Enthusiast</p>
+            <p class="tagline">The one who codes, writes, rescues animals with AI, and somehow makes it all look effortless</p>
+            <div class="cta-buttons">
+                <a href="#about" class="cta-button">Discover More</a>
+                <a href="#projects" class="cta-button">View Projects</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="section about" id="about">
+        <h2 class="section-title" onclick="sectionTitleClick(this)">About Me</h2>
+        <div class="about-content">
+            <div class="about-image-section">
+                <div class="profile-image" onclick="profileImageClick()">
+                    <div class="profile-inner">👩‍💻</div>
+                </div>
+            </div>
+            <div class="about-text">
+                <p>👋 Hey there! I'm a curious developer who loves turning ideas into reality with code 💻✨</p>
+                <p>I enjoy building clean interfaces, solving tricky bugs, and learning something new every day 🌱. When I'm not coding, you'll probably find me geeking out over design systems, sipping coffee ☕, or thinking about my next side project 💡</p>
+                <p><strong>What drives me:</strong><br>
+                🚀 Currently building cool projects that (hopefully) make life easier<br>
+                🧠 Always learning — whether it's a new framework or a random CS concept<br>
+                🤝 Love collaborating, pair programming, and sharing knowledge<br>
+                🎨 Obsessed with clean UI, smooth UX, and dark mode everything<br>
+                💬 Open to fun tech chats, idea jamming, and meme-sharing</p>
+                
+                <div class="stats-grid">
+                    <div class="stat-item" onclick="statClick(this)">
+                        <div class="stat-number">5+</div>
+                        <div class="stat-label">Projects</div>
+                    </div>
+                    <div class="stat-item" onclick="statClick(this)">
+                        <div class="stat-number">1K+</div>
+                        <div class="stat-label">Hours Coding</div>
+                    </div>
+                    <div class="stat-item" onclick="statClick(this)">
+                        <div class="stat-number">6</div>
+                        <div class="stat-label">Tech Stack</div>
+                    </div>
+                    <div class="stat-item" onclick="statClick(this)">
+                        <div class="stat-number">∞</div>
+                        <div class="stat-label">Coffee Cups</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section projects" id="projects">
+        <h2 class="section-title" onclick="sectionTitleClick(this)">My Projects</h2>
+        <div class="projects-grid">
+            <div class="project-card" onclick="projectClick(this)">
+                <h3>Track-and-Trail</h3>
+                <p>A comprehensive tracking application built with TypeScript that helps users monitor and trail various activities. Features real-time data visualization, user-friendly interface, and robust data management capabilities perfect for productivity enthusiasts.</p>
+                <div class="tech-stack">
+                    <span class="tech-tag">TypeScript</span>
+                    <span class="tech-tag">JavaScript</span>
+                    <span class="tech-tag">HTML/CSS</span>
+                    <span class="tech-tag">Data Viz</span>
+                </div>
+                <div class="project-links">
+                    <a href="https://github.com/tishajeswani33/Track-and-Trail" class="project-link">GitHub</a>
+                    <a href="#" class="project-link">Live Demo</a>
+                </div>
+            </div>
+
+            <div class="project-card" onclick="projectClick(this)">
+                <h3>Paw-Phillips</h3>
+                <p>An innovative animal rescue platform that combines AI with compassion. This web application helps connect rescued animals with potential adopters while providing resources for animal care and welfare. Making a real difference in animal lives!</p>
+                <div class="tech-stack">
+                    <span class="tech-tag">HTML</span>
+                    <span class="tech-tag">CSS</span>
